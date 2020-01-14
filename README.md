@@ -1,21 +1,3 @@
 # UrlShortener
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `url_shortener` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:url_shortener, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/url_shortener](https://hexdocs.pm/url_shortener).
-
+Following along: [OTP in Elixir: Learn GenServer by Building Your Own URL Shortener](https://dev.to/fteem/otp-in-elixir-learn-genserver-by-building-your-own-url-shortener-5b0d)
