@@ -2,43 +2,25 @@ defmodule UrlShortener do
   @moduledoc """
   Documentation for UrlShortener.
   """
+  use Agent
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> UrlShortener.hello()
-      :world
-
-  """
   def start do
-    # Spawns the given function (2nd arg) from the given module (1st arg)
-    # passing it the given args (3rd arg) and returns its PID.
-    spawn(__MODULE__, :loop, [%{}])
+    # Init with an empty map as the initial state
+    Agent.start_link(fn -> %{} end)
   end
 
-  def loop(state) do
-    receive do
-      {:stop, caller} ->
-        send(caller, "Shutting down.")
+  def get(agent, md5) do
+    Agent.get(agent, &Map.fetch(&1, md5))
+  end
 
-      {:shorten, url, caller} ->
-        url_md5 = md5(url)
-        new_state = Map.put(state, url_md5, url)
-        send(caller, url_md5)
-        loop(new_state)
+  def shorten(agent, url) do
+    url_md5 = md5(url)
+    Agent.update(agent, fn state -> Map.put(state, url_md5, url) end)
+  end
 
-      {:get, md5, caller} ->
-        send(caller, Map.fetch(state, md5))
-        loop(state)
-
-      :flush ->
-        loop(%{})
-
-      _ ->
-        loop(state)
-    end
+  def stop(agent) do
+    Agent.stop(agent)
+    # send(caller, "Shutting down")
   end
 
   defp md5(url) do
